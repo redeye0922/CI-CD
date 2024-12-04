@@ -1,18 +1,15 @@
-# Base image
-FROM node:14-alpine
-
-# Set working directory
+# 빌드 스테이지
+FROM node:14-alpine AS build
 WORKDIR /app
-
-# Install dependencies
 COPY package*.json ./
 RUN npm install
-
-# Copy project files
 COPY . .
+RUN npm run build
 
-# Expose the port the app runs on
+# 실행 스테이지
+FROM node:14-alpine
+WORKDIR /app
+COPY --from=build /app/dist /app
+RUN npm install -g http-server
 EXPOSE 9091
-
-# Start the app
-CMD ["npm", "run", "serve"]
+CMD ["http-server", "/app", "-p", "9091", "-a", "0.0.0.0"]
