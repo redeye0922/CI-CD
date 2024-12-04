@@ -18,14 +18,14 @@ export default createStore({
         async fetchPosts({
             commit
         }) {
-            const response = await fetch('http://localhost:9090/posts');
+            const response = await fetch('http://localhost:9090/api/posts');
             const data = await response.json();
             commit('setPosts', data);
         },
         async createPost({
             commit
         }, post) {
-            const response = await fetch('http://localhost:9090/posts', {
+            const response = await fetch('http://localhost:9090/api/posts', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
