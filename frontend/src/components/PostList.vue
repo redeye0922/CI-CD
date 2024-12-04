@@ -7,6 +7,7 @@
         <button @click="confirmDelete(post.id)">삭제</button>
       </li>
     </ul>
+    <button @click="goToCreatePost">새 게시물 작성</button>
   </div>
 </template>
 
@@ -14,11 +15,6 @@
 import { mapState } from 'vuex';
 
 export default {
-  data() {
-    return {
-      postToDelete: null
-    };
-  },
   computed: {
     ...mapState(['posts'])
   },
@@ -39,6 +35,9 @@ export default {
         console.error("게시물 삭제 중 오류가 발생했습니다:", error);
         alert('게시물 삭제에 실패했습니다.');
       }
+    },
+    goToCreatePost() {
+      this.$router.push('/create');
     }
   }
 };
@@ -64,5 +63,14 @@ button {
 
 button:hover {
   background: #ff1a1a;
+}
+
+button:last-of-type {
+  background: #4CAF50;
+  margin-top: 20px;
+}
+
+button:last-of-type:hover {
+  background: #45a049;
 }
 </style>
