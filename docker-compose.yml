@@ -24,6 +24,7 @@ services:
 
   db:
     image: mysql:8.0
+    container_name: mysql-db
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: mydatabase
@@ -40,3 +41,4 @@ services:
         target: /docker-entrypoint-initdb.d/init.sql
 volumes:
   db_date:
+    name: db_data
