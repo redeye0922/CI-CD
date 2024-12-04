@@ -30,3 +30,5 @@ export default {
   }
 };
 </script>
+
+<style scoped> form { display: flex; flex-direction: column; } button { align-self: flex-end; } </style>

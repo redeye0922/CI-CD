@@ -19,3 +19,5 @@ export default {
   }
 };
 </script>
+
+<style scoped> li { background: #f0f0f0; padding: 15px; margin-bottom: 10px; border-radius: 8px; } </style>
