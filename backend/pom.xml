@@ -30,13 +30,11 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-		    <groupId>mysql</groupId>
-		    <artifactId>mysql-connector-java</artifactId>
-		    <version>9.1.0</version>
-		    <scope>system</scope>
-		    <systemPath>${env.MYSQL_CONNECTOR_PATH}</systemPath>
-		</dependency>
-
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.28</version>
+            <scope>runtime</scope>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
@@ -55,29 +53,4 @@
             </plugin>
         </plugins>
     </build>
-    <profiles>
-        <profile>
-            <id>windows</id>
-            <activation>
-                <os>
-                    <family>Windows</family>
-                </os>
-            </activation>
-            <properties>
-                <mysql.connector.path>C:/dockerCompose/backend/mysql-connector-java-9.1.0.jar</mysql.connector.path>
-            </properties>
-        </profile>
-        <profile>
-            <id>wsl</id>
-            <activation>
-                <os>
-                    <family>unix</family>
-                    <name>Linux</name>
-                </os>
-            </activation>
-            <properties>
-                <mysql.connector.path>/app/mysql-connector-java-9.1.0.jar</mysql.connector.path>
-            </properties>
-        </profile>
-    </profiles>
 </project>

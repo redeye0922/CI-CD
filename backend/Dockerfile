@@ -3,11 +3,7 @@ FROM maven:3.8.4-openjdk-17-slim AS build
 
 WORKDIR /app
 
-# 환경 변수 설정
-ENV MYSQL_CONNECTOR_PATH=/app/mysql-connector-java-9.1.0.jar
-
 # JAR 파일과 프로젝트 파일 복사
-COPY ./mysql-connector-java-9.1.0.jar $MYSQL_CONNECTOR_PATH
 COPY ./pom.xml /app/pom.xml
 COPY ./src /app/src
 
