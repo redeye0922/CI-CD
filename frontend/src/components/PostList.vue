@@ -2,17 +2,17 @@
   <div>
     <h1>게시판</h1>
     <ul>
-      <li v-for="post in posts" :key="post.id">
-        <div>
-          <strong> 제목: </strong> {{ post.title }}
-        </div> 
-        <div>
-          <strong> 내용: </strong> {{ post.content }}
-        </div> 
-        <button @click="confirmDelete(post.id)">삭제</button>
+      <li v-for="post in posts" :key="post.id" class="post-item">
+        <div class="post-title">
+          <strong>제목:</strong> {{ post.title }}
+        </div>
+        <div class="post-content">
+          <strong>내용:</strong> {{ post.content }}
+        </div>
+        <button @click="confirmDelete(post.id)" class="delete-button">삭제</button>
       </li>
     </ul>
-    <button @click="goToCreatePost">새 게시물 작성</button>
+    <button @click="goToCreatePost" class="create-button">새 게시물 작성</button>
   </div>
 </template>
 
@@ -49,14 +49,30 @@ export default {
 </script>
 
 <style scoped>
-li {
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.post-item {
+  display: flex;
+  align-items: center;
   background: #f0f0f0;
   padding: 15px;
   margin-bottom: 10px;
   border-radius: 8px;
 }
 
-button {
+.post-title {
+  flex: 1;
+  margin-right: 20px;
+}
+
+.post-content {
+  flex: 2;
+}
+
+.delete-button {
   padding: 5px 10px;
   background: #ff4d4d;
   color: white;
@@ -66,16 +82,21 @@ button {
   margin-left: 10px;
 }
 
-button:hover {
+.delete-button:hover {
   background: #ff1a1a;
 }
 
-button:last-of-type {
+.create-button {
+  padding: 10px 20px;
   background: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
   margin-top: 20px;
 }
 
-button:last-of-type:hover {
+.create-button:hover {
   background: #45a049;
 }
 </style>
