@@ -3,7 +3,12 @@
     <h1>게시판</h1>
     <ul>
       <li v-for="post in posts" :key="post.id">
-        {{ post.title }}
+        <div>
+          <strong> 제목: </strong> {{ post.title }}
+        </div> 
+        <div>
+          <strong> 내용: </strong> {{ post.content }}
+        </div> 
         <button @click="confirmDelete(post.id)">삭제</button>
       </li>
     </ul>
