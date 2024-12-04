@@ -1,60 +1,67 @@
 <template>
   <div>
-    <h2>새 게시물 작성</h2>
-    <form @submit.prevent="submitPost">
-      <input v-model="title" placeholder="제목" />
-      <textarea v-model="content" placeholder="내용"></textarea>
-      <button type="submit">작성</button>
-    </form>
+    <h1>게시판</h1>
+    <ul>
+      <li v-for="post in posts" :key="post.id">
+        {{ post.title }}
+        <button @click="confirmDelete(post.id)">삭제</button>
+      </li>
+    </ul>
+    <button @click="goToCreatePost">새 게시물 작성</button>
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex';
+
 export default {
-  data() {
-    return {
-      title: '',
-      content: ''
-    };
+  computed: {
+    ...mapState(['posts'])
+  },
+  created() {
+    this.$store.dispatch('fetchPosts');
   },
   methods: {
-    async submitPost() {
-      const post = {
-        title: this.title,
-        content: this.content
-      };
-
-      // 게시물 생성 후 라우터를 사용하여 PostList로 이동
-      try {
-        await this.$store.dispatch('createPost', post);
-        this.title = '';
-        this.content = '';
-        this.$router.push('/');
-      } catch (error) {
-        console.error("게시물 생성 중 오류가 발생했습니다:", error);
+    confirmDelete(postId) {
+      if (confirm('삭제하시겠습니까?')) {
+        this.deletePost(postId);
       }
+    },
+    async deletePost(postId) {
+      try {
+        await this.$store.dispatch('deletePost', postId);
+        alert('게시물이 삭제되었습니다.');
+      } catch (error) {
+        console.error("게시물 삭제 중 오류가 발생했습니다:", error);
+        alert('게시물 삭제에 실패했습니다.');
+      }
+    },
+    goToCreatePost() {
+      this.$router.push('/create');
     }
   }
 };
 </script>
 
 <style scoped>
-form {
-  display: flex;
-  flex-direction: column;
+li {
+  background: #f0f0f0;
+  padding: 15px;
+  margin-bottom: 10px;
+  border-radius: 8px;
 }
 
 button {
-  align-self: flex-end;
-  padding: 10px 20px;
-  background: #4CAF50;
+  padding: 5px 10px;
+  background: #ff4d4d;
   color: white;
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  margin-left: 10px;
 }
 
 button:hover {
-  background: #45a049;
+  background: #ff1a1a;
 }
 </style>
