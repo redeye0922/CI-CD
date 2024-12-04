@@ -33,12 +33,7 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - type: volume
-        source: db_data
-        target: /var/lib/mysql          
-      - type: bind
-        source: ./db/init.sql
-        target: /docker-entrypoint-initdb.d/init.sql
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+
 volumes:
-  db_date:
-    name: db_data
+  db_date: 
