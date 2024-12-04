@@ -1,6 +1,14 @@
 version: '3.8'
 
 services:
+  frontend:
+    build: 
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: docker-compose-vue-app
+    ports: 
+      - "3030:3030"
+      
   backend:
     build: ./backend
     ports:
@@ -23,3 +31,6 @@ services:
       MYSQL_PASSWORD: mypassword
     ports:
       - "3306:3306"
+
+volumes:
+  db_date:
