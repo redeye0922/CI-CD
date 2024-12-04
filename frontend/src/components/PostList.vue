@@ -57,13 +57,14 @@ ul {
 .post-item {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   background: #f0f0f0;
   padding: 15px;
   margin-bottom: 10px;
   border-radius: 8px;
 }
 
-.post-title {
+.post-title, .post-content {
   flex: 1;
   margin-right: 20px;
 }
@@ -79,7 +80,6 @@ ul {
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  margin-left: 10px;
 }
 
 .delete-button:hover {
