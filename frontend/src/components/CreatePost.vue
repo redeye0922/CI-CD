@@ -64,4 +64,13 @@ button {
 button:hover {
   background: #ff1a1a;
 }
+
+button:last-of-type {
+  background: #4CAF50;
+  margin-top: 20px;
+}
+
+button:last-of-type:hover {
+  background: #45a049;
+}
 </style>
