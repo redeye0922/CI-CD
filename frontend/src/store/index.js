@@ -17,12 +17,12 @@ export default createStore({
   },
   actions: {
     async fetchPosts({ commit }) {
-      const response = await fetch('http://localhost:9090/posts');
+      const response = await fetch('http://localhost:9090/api/posts');
       const data = await response.json();
       commit('setPosts', data);
     },
     async createPost({ commit }, post) {
-      const response = await fetch('http://localhost:9090/posts', {
+      const response = await fetch('http://localhost:9090/api/posts', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -33,7 +33,7 @@ export default createStore({
       commit('addPost', data);
     },
     async deletePost({ commit }, postId) {
-      await fetch(`http://localhost:9090/posts/${postId}`, {
+      await fetch(`http://localhost:9090/api/posts/${postId}`, {
         method: 'DELETE'
       });
       commit('removePost', postId);
