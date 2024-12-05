@@ -17,26 +17,47 @@ export default createStore({
   },
   actions: {
     async fetchPosts({ commit }) {
-      const response = await fetch('http://localhost:9090/api/posts');
-      const data = await response.json();
-      commit('setPosts', data);
+      try {
+        const response = await fetch('http://localhost:9090/api/posts');
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        commit('setPosts', data);
+      } catch (error) {
+        console.error('Failed to fetch posts:', error);
+      }
     },
     async createPost({ commit }, post) {
-      const response = await fetch('http://localhost:9090/api/posts', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(post)
-      });
-      const data = await response.json();
-      commit('addPost', data);
+      try {
+        const response = await fetch('http://localhost:9090/api/posts', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(post)
+        });
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        commit('addPost', data);
+      } catch (error) {
+        console.error('Failed to create post:', error);
+      }
     },
     async deletePost({ commit }, postId) {
-      await fetch(`http://localhost:9090/api/posts/${postId}`, {
-        method: 'DELETE'
-      });
-      commit('removePost', postId);
+      try {
+        const response = await fetch(`http://localhost:9090/api/posts/${postId}`, {
+          method: 'DELETE'
+        });
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        commit('removePost', postId);
+      } catch (error) {
+        console.error('Failed to delete post:', error);
+      }
     }
   },
   modules: {}
