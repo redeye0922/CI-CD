@@ -32,9 +32,9 @@ pipeline {
                                 cp -r ${baseDir} ${newDir}
 
                                 cd ${newDir}
-
-                                # 포트를 증가시키는 sed 명령어
-                                sed -i 's/ports:\\n\\s*- \\"\\([0-9]*\\):\\([0-9]*\\"\\)/ports:\\n  - \\"\$((${BASH_REMATCH[1]} + 1)):\\2/g' docker-compose.yml
+                                
+                                # 포트를 증가시키는 명령어 수정
+                                awk '{ if (\$1 == "ports:") { getline; sub(":","\$((\\\$0 + 1)):",\$0); print \$0 } else print \$0 }' docker-compose.yml > docker-compose.yml.tmp && mv docker-compose.yml.tmp docker-compose.yml
                                 
                                 # 네트워크 이름 변경
                                 sed -i 's/networks:\\n\\s*- \\([a-zA-Z0-9_-]*\\)/networks:\\n  - \\1-1/g' docker-compose.yml
