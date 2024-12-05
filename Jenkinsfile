@@ -21,20 +21,24 @@ pipeline {
             steps {
                 script {
                     def baseDir = "/home/testdev/devCompose/docker-compose-deploy"
+                    def remoteHost = "172.29.231.196"
+                    def remoteUser = "testdev"
+
                     for (int i = 1; i <= env.NUM_DIRS.toInteger(); i++) {
                         def newDir = "${baseDir}-${i}"
                         sh """
-                        if [ ! -d "$newDir" ]; then
-                            sudo chown -R jenkins:jenkins /home/testdev/devCompose
-                            cp -r $baseDir $newDir
+                        ssh -o StrictHostKeyChecking=no -p 2222 ${remoteUser}@${remoteHost} << EOF
+                            if [ ! -d "${newDir}" ]; then
+                                cp -r ${baseDir} ${newDir}
 
-                            cd $newDir
-                            sed -i 's/ports:\\n\\s*- "\\([0-9]*\\):\\([0-9]*\\)"/ports:\\n  - "\$((\\1 + 1)):\\2"/g' docker-compose.yml
-                            sed -i 's/networks:\\n\\s*- \\([a-zA-Z0-9_-]*\\)/networks:\\n  - \\1-1/g' docker-compose.yml
-                            sed -i '/networks:/a \\\\  \\1-1:' docker-compose.yml
+                                cd ${newDir}
+                                sed -i 's/ports:\\n\\s*- "\\([0-9]*\\):\\([0-9]*\\)"/ports:\\n  - "\$((\\1 + 1)):\\2"/g' docker-compose.yml
+                                sed -i 's/networks:\\n\\s*- \\([a-zA-Z0-9_-]*\\)/networks:\\n  - \\1-1/g' docker-compose.yml
+                                sed -i '/networks:/a \\\\  \\1-1:' docker-compose.yml
 
-                            docker-compose up -d --build
-                        fi
+                                docker-compose up -d --build
+                            fi
+EOF
                         """
                     }
                 }
