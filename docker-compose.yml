@@ -17,7 +17,7 @@ services:
     ports:
       - "9090:9090"
     volumes:
-      - /home/docker/.m2:/root/.m2
+      - maven_cache:/root/.m2
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/mydatabase
       SPRING_DATASOURCE_USERNAME: myuser
@@ -46,6 +46,8 @@ services:
 
 volumes:
   db_data:
-
+    name: my_mysql_db_data
+  maven_cache:
+    name: my_maven_cache
 networks:
   app-network:
