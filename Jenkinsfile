@@ -26,8 +26,8 @@ pipeline {
 
                     for (int i = 1; i <= env.NUM_DIRS.toInteger(); i++) {
                         def newDir = "${baseDir}-${i}"
-                        sh '''
-                        ssh -o StrictHostKeyChecking=no -p 2222 ${remoteUser}@${remoteHost} << EOF
+                        sh """
+                        ssh -o StrictHostKeyChecking=no -p 2222 ${remoteUser}@${remoteHost} << 'EOF'
                             if [ ! -d "${newDir}" ]; then
                                 cp -r ${baseDir} ${newDir}
 
@@ -43,7 +43,7 @@ pipeline {
                                 docker-compose up -d --build
                             fi
 EOF
-                        '''
+                        """
                     }
                 }
             }
