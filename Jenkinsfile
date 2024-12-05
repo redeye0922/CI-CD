@@ -28,10 +28,13 @@ pipeline {
                         def newDir = "${baseDir}-${i}"
                         sh """
                         ssh -o StrictHostKeyChecking=no -p 2222 ${remoteUser}@${remoteHost} << 'EOF'
-                            if [ ! -d "${newDir}" ]; then
-                                cp -r ${baseDir} ${newDir}
+                            BASE_DIR=${baseDir}
+                            NEW_DIR=${newDir}
 
-                                cd ${newDir}
+                            if [ ! -d "$NEW_DIR" ]; then
+                                cp -r $BASE_DIR $NEW_DIR
+
+                                cd $NEW_DIR
 
                                 # 포트를 증가시키는 sed 명령어
                                 sed -i 's/\\(ports:\\n\\s*- \\"\\)\\([0-9]*\\)\\(:\\([0-9]*\\"\\)\\)/\\1$$((\\2 + 1))\\3/' docker-compose.yml
