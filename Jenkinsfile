@@ -26,7 +26,7 @@ pipeline {
 
                     for (int i = 1; i <= env.NUM_DIRS.toInteger(); i++) {
                         def newDir = "${baseDir}-${i}"
-                        sh """
+                        sh '''
                         ssh -o StrictHostKeyChecking=no -p 2222 ${remoteUser}@${remoteHost} << EOF
                             if [ ! -d "${newDir}" ]; then
                                 cp -r ${baseDir} ${newDir}
@@ -34,10 +34,19 @@ pipeline {
                                 cd ${newDir}
 
                                 # 포트를 증가시키는 sed 명령어
-                                sed -i 's/\\(ports:\\n\\s*- \\"\\)\\([0-9]*\\)\\(:\\([0-9]*\\"\\)\\)/\\1$((\\2 + 1))\\3/' docker-compose.yml
+                                sed -i 's/\\(ports:\\n\\s*- \\"\\)\\([0-9]*\\)\\(:\\([0-9]*\\"\\)\\)/\\1$$((\\2 + 1))\\3/' docker-compose.yml
                                 
                                 # 네트워크 이름 변경
                                 sed -i 's/networks:\\n\\s*- \\([a-zA-Z0-9_-]*\\)/networks:\\n  - \\1-1/g' docker-compose.yml
                                 sed -i '/networks:/a \\\\  \\1-1:' docker-compose.yml
 
-                                docker-compose up
+                                docker-compose up -d --build
+                            fi
+EOF
+                        '''
+                    }
+                }
+            }
+        }
+    }
+}
