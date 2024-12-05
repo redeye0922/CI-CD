@@ -28,7 +28,7 @@ pipeline {
                             cp -r $baseDir $newDir
 
                             cd $newDir
-                            sed -i 's/ports:\\n\\s*- "\\([0-9]*\\):\\([0-9]*\\)"/ports:\\n  - "\\$((\\1 + 1)):\\2"/g' docker-compose.yml
+                            sed -i 's/ports:\\n\\s*- "\\([0-9]*\\):\\([0-9]*\\)"/ports:\\n  - "\$((\\1 + 1)):\\2"/g' docker-compose.yml
                             sed -i 's/networks:\\n\\s*- \\([a-zA-Z0-9_-]*\\)/networks:\\n  - \\1-1/g' docker-compose.yml
                             sed -i '/networks:/a \\\\  \\1-1:' docker-compose.yml
 
