@@ -25,7 +25,7 @@ pipeline {
                         def newDir = "${baseDir}-${i}"
                         sh """
                         if [ ! -d "$newDir" ]; then
-                            sudo chown -R $USER:$USER /home/testdev/devCompose
+                            sudo chown -R jenkins:jenkins /home/testdev/devCompose
                             cp -r $baseDir $newDir
 
                             cd $newDir
