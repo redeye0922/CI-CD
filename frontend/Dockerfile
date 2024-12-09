@@ -10,6 +10,9 @@ RUN npm install
 # Copy project files
 COPY . .
 
+# env setting
+ENV PORT=${VUE_APP_FRONTEND_PORT}
+
 RUN npm run build
 
 # Expose the port the app runs on
