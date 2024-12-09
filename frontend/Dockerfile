@@ -16,7 +16,7 @@ ENV PORT=${VUE_APP_FRONTEND_PORT}
 RUN npm run build
 
 # Expose the port the app runs on
-EXPOSE 3030
+EXPOSE ${VUE_APP_FRONTEND_PORT}
 
 # Start the app
 CMD ["npm", "run", "serve"]
