@@ -10,7 +10,8 @@ services:
     ports:
       - "${VUE_APP_FRONTEND_PORT}:${VUE_APP_FRONTEND_PORT}"
     environment:
-      VUE_APP_FRONTEND_URL: "${VUE_APP_BACKEND_URL}"
+      VUE_APP_BACKEND_URL: "${VUE_APP_BACKEND_URL}"
+      VUE_APP_FRONTEND_PORT: "${VUE_APP_FRONTEND_PORT}"  # 환경 변수 추가
     networks:
       - app-network
     env_file:
@@ -25,7 +26,8 @@ services:
     volumes:
       - maven_cache:/root/.m2
     environment:
-      - VUE_APP_FRONTEND_PORT=${VUE_APP_FRONTEND_PORT}
+      - VUE_APP_FRONTEND_PORT=${VUE_APP_FRONTEND_PORT}  # 환경 변수 추가
+      - VUE_APP_BACKEND_PORT=${VUE_APP_BACKEND_PORT}  # 환경 변수 추가
       - SPRING_DATASOURCE_URL=${SPRING_DATASOURCE_URL}
       - SPRING_DATASOURCE_USERNAME=${SPRING_DATASOURCE_USERNAME}
       - SPRING_DATASOURCE_PASSWORD=${SPRING_DATASOURCE_PASSWORD}
