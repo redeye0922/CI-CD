@@ -17,6 +17,6 @@ WORKDIR /app
 
 COPY --from=build /app/target/demo-0.0.1-SNAPSHOT.jar /app/app.jar
 
-EXPOSE 9090
+EXPOSE ${VUE_APP_BACKEND_PORT}
 
 CMD ["java", "-jar", "/app/app.jar", "--server.port=${VUE_APP_BACKEND_PORT}"]
