@@ -12,6 +12,7 @@ COPY . .
 
 # env setting
 ENV PORT=${VUE_APP_FRONTEND_PORT}
+ENV VUE_APP_BACKEND_URL=${VUE_APP_BACKEND_URL}
 
 RUN npm run build
 
