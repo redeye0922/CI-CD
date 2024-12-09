@@ -18,7 +18,8 @@ export default createStore({
   actions: {
     async fetchPosts({ commit }) {
       try {
-        const response = await fetch('http://localhost:9090/api/posts');
+        const baseURL = process.env.VUE_APP_BACKEND_URL;
+        const response = await fetch(`${baseURL}/api/posts`);
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
@@ -30,7 +31,8 @@ export default createStore({
     },
     async createPost({ commit }, post) {
       try {
-        const response = await fetch('http://localhost:9090/api/posts', {
+        const baseURL = process.env.VUE_APP_BACKEND_URL;
+        const response = await fetch(`${baseURL}/api/posts`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -48,7 +50,8 @@ export default createStore({
     },
     async deletePost({ commit }, postId) {
       try {
-        const response = await fetch(`http://localhost:9090/api/posts/${postId}`, {
+        const baseURL = process.env.VUE_APP_BACKEND_URL;
+        const response = await fetch(`${baseURL}/api/posts/${postId}`, {
           method: 'DELETE'
         });
         if (!response.ok) {
