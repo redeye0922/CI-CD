@@ -8,7 +8,9 @@ services:
     image: docker-compose-frontend:latest
     container_name: docker-compose-frontend
     ports:
-      - "3030:3030"
+      - "${VUE_APP_FRONTEND_PORT}:${VUE_APP_FRONTEND_PORT}"
+    environment:
+      VUE_APP_FRONTEND_URL: "${VUE_APP_BASE_URL}:${VUE_APP_FRONTEND_PORT}"
     networks:
       - app-network
 
@@ -17,19 +19,20 @@ services:
     image: docker-compose-backend:latest
     container_name: docker-compose-backend
     ports:
-      - "9090:9090"
+      - "${VUE_APP_BACKEND_PORT}:${VUE_APP_BACKEND_PORT}"
     volumes:
       - maven_cache:/root/.m2
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/mydatabase
       SPRING_DATASOURCE_USERNAME: myuser
       SPRING_DATASOURCE_PASSWORD: mypassword
+      VUE_APP_BACKEND_URL: "${VUE_APP_BASE_URL}:${VUE_APP_BACKEND_PORT}"
     depends_on:
       - db
     networks:
       - app-network
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:9090/actuator/health"]
+      test: ["CMD", "curl", "-f", "http://localhost:${VUE_APP_BACKEND_PORT}/actuator/health"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -38,6 +41,7 @@ services:
         limits:
           cpus: '0.50'
           memory: 512M
+
   db:
     image: mysql:8.0
     container_name: mysql-db
@@ -60,5 +64,6 @@ volumes:
     name: my_mysql_db_data
   maven_cache:
     name: my_maven_cache
+
 networks:
   app-network:
