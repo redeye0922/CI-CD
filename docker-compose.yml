@@ -8,9 +8,9 @@ services:
     image: docker-compose-frontend:latest
     container_name: docker-compose-frontend
     ports:
-      - "${VUE_APP_FRONTEND_PORT}:${VUE_APP_FRONTEND_PORT}"
+      - "3030:3030"
     environment:
-      VUE_APP_FRONTEND_URL: "${VUE_APP_BASE_URL}:${VUE_APP_FRONTEND_PORT}"
+      VUE_APP_FRONTEND_URL: "${VUE_APP_BASE_URL}:3030"
     networks:
       - app-network
     env_file:
@@ -21,7 +21,7 @@ services:
     image: docker-compose-backend:latest
     container_name: docker-compose-backend
     ports:
-      - "${VUE_APP_BACKEND_PORT}:${VUE_APP_BACKEND_PORT}"
+      - "9090:9090"
     volumes:
       - maven_cache:/root/.m2
     environment:
@@ -37,7 +37,7 @@ services:
     networks:
       - app-network
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:${VUE_APP_BACKEND_PORT}/actuator/health"]
+      test: ["CMD", "curl", "-f", "http://localhost:9090/actuator/health"]
       interval: 30s
       timeout: 10s
       retries: 3
